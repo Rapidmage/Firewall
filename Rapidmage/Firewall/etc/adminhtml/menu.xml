@@ -1,0 +1,11 @@
+<?xml version="1.0"?>
+ 
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../../Backend/etc/menu.xsd">
+    <menu>
+        <add id="Rapidmage_Firewall::main_menu" title="Firewall" module="Rapidmage_Firewall" sortOrder="20" resource="Rapidmage_Firewall::firewall" />
+        <add id="Rapidmage_Firewall::add_ips" title="Add custom ip" module="Rapidmage_Firewall" sortOrder="1" parent="Rapidmage_Firewall::main_menu" action="firewall/blackip/new" resource="Rapidmage_Firewall::manage_ip" />
+        <add id="Rapidmage_Firewall::manage_blackip" title="Blacklist Ip" module="Rapidmage_Firewall" sortOrder="2" parent="Rapidmage_Firewall::main_menu" action="firewall/blackip/index" resource="Rapidmage_Firewall::manage_blackip" />
+        <add id="Rapidmage_Firewall::manage_whiteip" title="Whitelist Ip" module="Rapidmage_Firewall" sortOrder="3" parent="Rapidmage_Firewall::main_menu" action="firewall/whiteip/index" resource="Rapidmage_Firewall::manage_whiteip" />
+        <add id="Rapidmage_Firewall::configuration" title="Configurations" module="Rapidmage_Firewall" sortOrder="4" parent="Rapidmage_Firewall::main_menu" action="adminhtml/system_config/edit/section/firewall" resource="Rapidmage_Firewall::configuration" />
+    </menu>
+</config>

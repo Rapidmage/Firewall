@@ -1,0 +1,23 @@
+<?xml version="1.0"?>
+ 
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../../../../lib/internal/Magento/Framework/Acl/etc/acl.xsd">
+    <acl>
+        <resources>
+            <resource id="Magento_Backend::admin">
+				<resource id="Rapidmage_Firewall::firewall" title="Firewall" sortOrder="100">
+                    <resource id="Rapidmage_Firewall::add_ips" title="Add Ip" sortOrder="1" />
+                    <resource id="Rapidmage_Firewall::manage_blackip" title="Manage Blacklist" sortOrder="2" />
+                    <resource id="Rapidmage_Firewall::manage_whiteip" title="Manage Whitelist" sortOrder="3" />
+                    <resource id="Rapidmage_Firewall::configuration" title="Configurations" sortOrder="4" />
+                </resource>
+                <resource id="Magento_Backend::stores">
+                    <resource id="Magento_Backend::stores_settings">
+                        <resource id="Magento_Config::config">
+                            <resource id="Rapidmage_Firewall::system_config" title="Rapidmage Firewall Section" />
+                        </resource>
+                    </resource>
+                </resource>
+            </resource>
+        </resources>
+    </acl>
+</config>

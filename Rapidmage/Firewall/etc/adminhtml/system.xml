@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+ 
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../../Backend/etc/system_file.xsd">
+    <system>
+        <tab id="rapidmage" translate="label" sortOrder="900">
+            <label>Rapidmage</label>
+        </tab>
+        <section id="firewall" translate="label" sortOrder="1" showInDefault="1" >
+            <label>Firewall</label>
+            <tab>rapidmage</tab>
+            <resource>Rapidmage_Firewall::system_config</resource>
+            <group id="ip_block" translate="label" sortOrder="1" showInDefault="1" >
+                <label>Ip Block Settings</label>
+                <field id="enable_in_frontend" translate="label" type="select" sortOrder="1" showInDefault="1" >
+                    <label>Enable in frontend</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field>
+               
+            </group>
+        </section>
+    </system>
+</config>
