@@ -41,23 +41,9 @@ class Router implements RouterInterface
             $ipCollection = $ipModel->getCollection();
             $ip = $_SERVER['REMOTE_ADDR'];
            // echo $ip;die;
-            $whitelists=$ipCollection->addFieldToFilter('member_access', 1)->addFieldToFilter('ip_address',$ip); //Get Ip exist in whitelist
-            $arrayfilter = array_filter($whitelists->getData()); // Remove all empty values
-            if (empty($arrayfilter)) { // check whether an array is empty or not
-				//echo "hello";die;
-           
-            //foreach($whitelists as $ip){
-				//$whiteips[]=$ip->getIpAddress();
-			//}
-			
-			//if (!in_array($ip, $whiteips)){	
-		      $identifier = trim($request->getPathInfo(), '/');//echo $identifier;die;
+            $ip_collections=$ipCollection->addFieldToFilter('ip_address',$ip)->getData(); //Get Ip collections      
+            if ($ip_collections[0]['member_access']==0) { // check whether an ip is in blacklist	//0 -Black, 1-White	 
 			  
-				// echo "wecome";die;
-				
-				//echo $ip;die;
-			    //if($ip=='172.17.0.1'){
-				  //$request->setModuleName('firewall')->setControllerName('ipblock')->setActionName('ipblock');
 				  $request->setModuleName('cms')->setControllerName('page')->setActionName('view')->setParam('page_id', 1); 
 				   $request->setDispatched(true);
 	               $this->dispatched = true;
@@ -65,8 +51,7 @@ class Router implements RouterInterface
 	                    'Magento\Framework\App\Action\Forward',
 	                    ['request' => $request]
 	                );
-				         
-             //}
+				                 
 	     }
        return null;  
 	 }
