@@ -2,51 +2,51 @@
 namespace Rapidmage\Firewall\Model;
 use Magento\Framework\Event\ObserverInterface;
 use Rapidmage\Firewall\Model\IpFactory;
+use Magento\Framework\Controller\Result\Redirect;
 class Observer implements ObserverInterface
 { 
-	 
+	protected $ipaccessObject;
     protected $_ipFactory;
 	public function __construct(
         IpFactory $ipFactory
         )
     {
+		$object = new Ipaccess; 
+		$this->ipaccessObject = $object;
 		$this->_ipFactory = $ipFactory;
     }
     
    public function execute(\Magento\Framework\Event\Observer $observer)
     {
 		$id=$_SERVER['REMOTE_ADDR'];
-		$ipModel = $this->_ipFactory->create();      
-        $whiteip_collection=$ipModel->getCollection()->addFieldToFilter('ip_address',$id)->addFieldToFilter('member_access',1)->getData();
-       //print_r($whiteip_collection);die;
-        if (empty(array_filter($whiteip_collection))) {      // To check ip in white list
-			$om = \Magento\Framework\App\ObjectManager::getInstance();
-			$cache = $om->get('Magento\Framework\App\CacheInterface');
-		    $tags=array();$lifeTime=10800;
-		    $val=$cache->load($id);
-			if($val){
-				if($val>2){
-					$blackip_collection=$ipModel->getCollection()->addFieldToFilter('ip_address',$id)->addFieldToFilter('member_access',0)->getData();; 
-					
-					if (!empty(array_filter($blackip_collection))) {
-						$ipModel->load($blackip_collection[0]['id']);
-					}
-					$ipModel->setIpAddress($id);
-					$ipModel->setDescription('Too more login falied attempts');
-					$ipModel->setMemberAccess(0);
-					$ipModel->setFlag(1);
-					$ipModel->save();
-				}
-				$count=(int)$val+1;			
-				$cache->save($count, $id, $tags, $lifeTime);
+		$ipModel = $this->_ipFactory->create();
+		echo $ip_access=$this->ipaccessObject->getIpaccess($ipModel);die;
+		if($ip_access==1){
+			return;
+		}
+		elseif($ip_access==0){
+			//return $this->resultRedirectFactory->create()->setUrl($this->_redirect->getRedirectUrl());
+			//Redirect to 404 page
 			}
 			else{
-				$count=1;
-				$cache->save($count, $id, $tags, $lifeTime);		
-			}
-			
-		
-			echo $cache->load($id);
-	   }
-    }
+				if($ip_access==2){
+					$get_ip=$ipModel->getCollection()->addFieldToFilter('ip_address',$id)->getData();
+					$count=$get_ip[0]['req_count'];
+					$ipModel->load($get_ip[0]['id']);
+					$ipModel->setReqCount($count+1);
+					if($count>2){
+						$ipModel->setDescription('Too more login falied attempts');
+				        $ipModel->setMemberAccess(0);
+					}
+				}
+				else{
+					$ipModel->setIpAddress($id);
+					$ipModel->setReqCount(1);
+					$ipModel->setDescription('Failed Login attempts');
+					$ipModel->setMemberAccess(2);  // Neither Black nor white ip
+					$ipModel->setFlag(1);
+				}
+				$ipModel->save();	
+		   }
+	 }
 }
