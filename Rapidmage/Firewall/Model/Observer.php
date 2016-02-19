@@ -20,7 +20,7 @@ class Observer implements ObserverInterface
     {
 		$id=$_SERVER['REMOTE_ADDR'];
 		$ipModel = $this->_ipFactory->create();
-		echo $ip_access=$this->ipaccessObject->getIpaccess($ipModel);die;
+		$ip_access=$this->ipaccessObject->getIpaccess($ipModel);
 		if($ip_access==1){
 			return;
 		}

@@ -5,6 +5,7 @@ use Magento\Framework\App\RouterInterface;
 use Magento\Framework\App\ActionFactory;
 use Magento\Framework\App\ResponseInterface;
 use Rapidmage\Firewall\Model\IpFactory;
+use Rapidmage\Firewall\Model\Ipaccess;
 
 class Router implements RouterInterface
 {
@@ -15,13 +16,16 @@ class Router implements RouterInterface
     protected $actionFactory;
     protected $dispatched;
     protected $_ipFactory;
+    protected $ipaccessObject;
     
     public function __construct(
          ActionFactory $actionFactory,
          ResponseInterface $response,
-         IpFactory $ipFactory
+         IpFactory $ipFactory,
+         Ipaccess $Ipaccess
         )
     {
+		$this->ipaccessObject = $Ipaccess;
 		$this->actionFactory = $actionFactory;
 		$this->response = $response;
         $this->_ipFactory = $ipFactory;
@@ -40,14 +44,15 @@ class Router implements RouterInterface
 			$ipModel = $this->_ipFactory->create();      
             $ipCollection = $ipModel->getCollection();
             $ip = $_SERVER['REMOTE_ADDR'];
-           // echo $ip;die;
-            $ip_collections=$ipCollection->addFieldToFilter('ip_address',$ip)->getData(); //Get Ip collections      
-            if ($ip_collections[0]['member_access']==0) { // check whether an ip is in blacklist	//0 -Black, 1-White	 
+            $ip_access=$this->ipaccessObject->getIpaccess($ipModel);
+            //echo $ip_access;die;
+            //$ip_collections=$ipCollection->addFieldToFilter('ip_address',$ip)->getData(); //Get Ip collections      
+            if ($ip_access==0) { // check whether an ip is in blacklist	//0 -Black, 1-White	 
 			  
 				  $request->setModuleName('cms')->setControllerName('page')->setActionName('view')->setParam('page_id', 1); 
-				   $request->setDispatched(true);
-	               $this->dispatched = true;
-	               return $this->actionFactory->create(
+				  $request->setDispatched(true);
+	              $this->dispatched = true;
+	              return $this->actionFactory->create(
 	                    'Magento\Framework\App\Action\Forward',
 	                    ['request' => $request]
 	                );
