@@ -1,0 +1,16 @@
+<iframe style="display:none; border: medium none;" id="scanresult" src="" width="100%" height="700px"></iframe>
+<script>
+
+	var baseUrl = "<?php echo $this->getBaseUrl(); ?>";
+	//var url = "<?php echo $this->getCurrentUrl(); ?>";
+	//alert(url);
+	var r = confirm("Press ok to scan you store. This may not work under intranet environment");
+	var iframe = document.getElementById('scanresult');
+	if (r == true) {
+		iframe.src = 'http://magefirewall.com/scan.php?url='+baseUrl;
+		document.getElementById('scanresult').style.display='block'; 
+	} else {
+       //window.location = url;
+	}	
+</script>
+

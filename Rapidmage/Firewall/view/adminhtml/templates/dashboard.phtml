@@ -1,0 +1,8 @@
+<h1 style="color:#f1703d">Recently modified files</h2>
+<?php
+$lists[0] = 5;
+exec('find . ! -path "./var*" ! -path "./pub/static*" -iregex ".*\(html\|php\|xml\|phtml\|sh\|js\|css\)" -mtime -'.$lists[0],$lists[1]);
+//exec('find . -iregex ".*\(html\|php\|xml\)" -mtime -'.$lists[0],$lists[1]);
+$lists[1] = implode("<br />", $lists[1]);
+echo $lists[1];
+?>
