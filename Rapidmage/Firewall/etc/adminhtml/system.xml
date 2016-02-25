@@ -15,6 +15,19 @@
                     <label>Enable in frontend</label>
                     <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
                 </field>
+                <field id="admin_login_attempts" translate="label" type="text" sortOrder="2" showInDefault="1" >
+                    <label>Admin Login Attempts (Allowed)</label>               
+                </field>
+                <field id="ban_attack_ip" translate="label" type="text" sortOrder="2" showInDefault="1" >
+                    <label>Ban attacking IPs from accessing site </label> 
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>              
+                </field>
+                <field id="receiver_email_address" translate="label" type="text" sortOrder="2" showInDefault="1" >
+                    <label>Receiver Email address </label>               
+                </field>
+                  <field id="recent_modified_days" translate="label" type="text" sortOrder="2" showInDefault="1" >
+                    <label>Show recent modified file days </label>               
+                </field>
                
             </group>
         </section>
