@@ -1,6 +1,12 @@
 <?xml version="1.0"?>
  
 <page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../../../../../../lib/internal/Magento/Framework/View/Layout/etc/page_configuration.xsd">
+	<head>
+	    <title>Page Speed</title>
+        <link src="Rapidmage_Firewall::js/fusioncharts.js"/>
+        <link src="Rapidmage_Firewall::js/fusioncharts.theme.fint.js"/>
+        <link src="Rapidmage_Firewall::js/fusioncharts.widgets.js"/>
+   </head>	
    <body>
        <referenceContainer name="content">
            <block class="Rapidmage\Firewall\Block\Adminhtml\Dashboard" name="rapidmage_firewall_dashboard_speed" template="speed.phtml"/>

@@ -15,6 +15,7 @@ var callbacks = {}
 // Invokes the PageSpeed Insights API. The response will contain
 // JavaScript that invokes our callback with the PageSpeed results.
 function runPagespeed(device) {
+
   var s = document.createElement('script');
   s.type = 'text/javascript';
   s.async = true;
@@ -54,6 +55,7 @@ function runPagespeedCallbacks(result) {
       console.log(callbacks[fn]);
     }
   }
+  jQuery('.loading-txt').hide();
 }
 
 
@@ -72,7 +74,7 @@ callbacks.displayPageSpeedScore = function(result) {
 
   var score = result.score;
   // Construct the query to send to the Google Chart Tools.
-  var query = [
+  /*var query = [
     'chtt=Page+Speed+score:+' + score,
     'chs=180x100',
     'cht=gom',
@@ -80,21 +82,23 @@ callbacks.displayPageSpeedScore = function(result) {
     'chxt=x,y',
     'chxl=0:|' + score,
   ].join('&');
-  var i = document.createElement('img');
-  i.src = CHART_API_URL + query;
+  //var i = document.createElement('img');
+  //i.src = CHART_API_URL + query; */
+  
   if(!window.displayPageSpeedScorecalled){
-  var bindelt = document.getElementById("speedometer");
-  bindelt.appendChild(i);
-  var remarkselt = document.createElement('div');
-  remarkselt.innerHTML= speedRemarks(score,'desktop');
-  bindelt.appendChild(remarkselt);
+  showchart('speedometer','Desktop',score);  
+  var bindelt = document.getElementById("speedometer-remarks");
+  //bindelt.appendChild(i);
+  bindelt.innerHTML= speedRemarks(score,'desktop');
+  //bindelt.appendChild(remarkselt);
   }
   else{
-  var bindelt = document.getElementById("speedometermobile");
-  bindelt.appendChild(i);
-  var remarkselt = document.createElement('div');
-  remarkselt.innerHTML= speedRemarks(score,'mobile');
-  bindelt.appendChild(remarkselt);
+  showchart('speedometermobile','Mobile',score);	  
+  var bindelt = document.getElementById("speedometer-remarks-mobile");
+  //bindelt.appendChild(i);
+  //var remarkselt = document.createElement('div');
+  bindelt.innerHTML= speedRemarks(score,'mobile');
+  //bindelt.appendChild(remarkselt);
 }
   
    window.displayPageSpeedScorecalled=true;
@@ -237,6 +241,51 @@ function speedRemarks(score,tab) {
   return scoreremarks;
 	
 }
+function showchart(elt,type,score) {
+	FusionCharts.ready(function () {
+	var cSatScoreChart = new FusionCharts({
+		type: 'angulargauge',
+		renderAt: elt,
+		width: '400',
+		height: '250',
+		dataFormat: 'json',
+		dataSource: {
+			"chart": {
+				"caption": "Google Page Speed Score",
+				"subcaption":type + ' - ' +score+'/100',
+				"lowerLimit": "0",
+				"upperLimit": "100",
+				"theme": "fint"
+			},
+			"colorRange": {
+				"color": [
+					{
+						"minValue": "0",
+						"maxValue": "50",
+						"code": "#e44a00"
+					},
+					{
+						"minValue": "50",
+						"maxValue": "75",
+						"code": "#f8bd19"
+					},
+					{
+						"minValue": "75",
+						"maxValue": "100",
+						"code": "#6baa01"
+					}
+				]
+			},
+			"dials": {
+				"dial": [{
+					"value": score
+				}]
+			}
+		}
+	});
+	cSatScoreChart.render();
+});	
+}
 </script>
 <div>
 	<h4>Google Page Speed Results</h4>
@@ -273,6 +322,7 @@ function speedRemarks(score,tab) {
 	.speednav-tabs > li.active { border:1px solid #DDDDDD;}
 	.card {background: #FFF none repeat scroll 0% 0%; box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.3); margin-bottom: 30px; }
 	.loading-txt { display:block;}
+	
 </style>
 
 <div class="container">
@@ -288,19 +338,21 @@ function speedRemarks(score,tab) {
 			<div class="tab-content">
 				<div role="tabpanel" class="tab-pane active" id="desktop">
 					<h4>Your Website Page Speed Score</h4>
-					
+					<div class="loading-txt">Loading...</div>
 					<div id="speedometer"></div><br>
+					<div id="speedometer-remarks"></div><br>
 					<h4>Follow the top page speed suggestions</h4>
-					
+					<div class="loading-txt">Loading...</div>
 					<div id="topresultslist"></div><br>
 					<h4>Resource size breakdown pie chart</h4>
-					
+					<div class="loading-txt">Loading...</div>
 					<div id="piechart"></div><br>
 				</div>
 				<div role="tabpanel" class="tab-pane" id="mobile">
 					<h4>Your Website Page Speed Score</h4>
 					
 					<div id="speedometermobile"></div><br>
+					<div id="speedometer-remarks-mobile"></div><br>
 					<h4>Follow the top page speed suggestions</h4>
 					
 					<div id="topresultslistmobile"></div><br>
@@ -324,53 +376,5 @@ require([ 'jquery', 'jquery/ui'], function($){ $( "#desktop-link" ).click(functi
 	jQuery('#mobile').hide();
     jQuery('#desktop').show();
 }); });
- require(['jquery','fusionchart'],function($){
-        jQuery(window).load(function() {
-            FusionCharts.ready(function () {
-			var cSatScoreChart = new FusionCharts({
-				type: 'angulargauge',
-				renderAt: 'chart-container',
-				width: '400',
-				height: '250',
-				dataFormat: 'json',
-				dataSource: {
-					"chart": {
-						"caption": "Customer Satisfaction Score",
-						"subcaption": "Last week",
-						"lowerLimit": "0",
-						"upperLimit": "100",
-						"theme": "fint"
-					},
-					"colorRange": {
-						"color": [
-							{
-								"minValue": "0",
-								"maxValue": "50",
-								"code": "#e44a00"
-							},
-							{
-								"minValue": "50",
-								"maxValue": "75",
-								"code": "#f8bd19"
-							},
-							{
-								"minValue": "75",
-								"maxValue": "100",
-								"code": "#6baa01"
-							}
-						]
-					},
-					"dials": {
-						"dial": [{
-							"value": "67"
-						}]
-					}
-				}
-			});
-			cSatScoreChart.render();
-		});
-        });
-
-    });
 
 </script>
