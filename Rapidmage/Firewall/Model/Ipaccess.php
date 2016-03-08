@@ -2,8 +2,7 @@
 namespace Rapidmage\Firewall\Model;
 class Ipaccess
 {
-   
-    public function getIpaccess($ipModel)
+   public function getIpaccess($ipModel)
     {
         $id=$_SERVER['REMOTE_ADDR'];
         $ip_collections=$ipModel->getCollection()->addFieldToFilter('ip_address',$id)->getData();

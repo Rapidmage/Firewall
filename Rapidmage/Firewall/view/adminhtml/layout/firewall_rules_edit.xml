@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+ 
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" layout="admin-2columns-left" xsi:noNamespaceSchemaLocation="../../../../../../../lib/internal/Magento/Framework/View/Layout/etc/page_configuration.xsd">
+    <body>
+        <referenceContainer name="left">
+            <block class="Rapidmage\Firewall\Block\Adminhtml\Rules\Edit\Tabs" name="rapidmage_firewall_rules.edit.tabs"/>
+        </referenceContainer>
+        <referenceContainer name="content">
+            <block class="Rapidmage\Firewall\Block\Adminhtml\Rules\Edit" name="rapidmage_firewall_rules.edit"/>
+        </referenceContainer>
+    </body>
+</page>

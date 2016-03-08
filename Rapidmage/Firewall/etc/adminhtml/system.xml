@@ -18,8 +18,12 @@
                 <field id="admin_login_attempts" translate="label" type="text" sortOrder="2" showInDefault="1" >
                     <label>Admin Login Attempts (Allowed)</label>               
                 </field>
-                <field id="ban_attack_ip" translate="label" type="text" sortOrder="2" showInDefault="1" >
+                <field id="ban_attack_ip" translate="label" type="select" sortOrder="2" showInDefault="1" >
                     <label>Ban attacking IPs from accessing site </label> 
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>              
+                </field>
+                <field id="console_mode_enable" translate="label" type="select" sortOrder="2" showInDefault="1" >
+                    <label>Console Mode </label> 
                     <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>              
                 </field>
                 <field id="receiver_email_address" translate="label" type="text" sortOrder="2" showInDefault="1" >
