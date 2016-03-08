@@ -32,13 +32,14 @@ class ControllerActionPredispatch implements ObserverInterface {
 		        define('ETAG', "\n");
 		        define('NF_STARTTIME', microtime(true));
 		}
+		$nfdebug = STAG ."starting Firewall". ETAG ;
 		if($this->helper->getOptionsData('console_mode_enable')==1) $MagenfCheckDebug = 2;
 			if ($MagenfCheckDebug) { 
 				$getIpOptionValue=$this->helper->getOptionsData('ban_attack_ip');
 				$CheckipOption = ($getIpOptionValue==0) ? 'off' : 'on';
 				
 		        $ip_address = $this->helper->getClientIp();
-		        $nfdebug = STAG ."starting Firewall". ETAG ;
+		       
 		        
 		        /* Start - Check Black ip try to access */
 		        $ipModel = $this->_ipFactory->create();
@@ -114,7 +115,8 @@ class ControllerActionPredispatch implements ObserverInterface {
 
             }
             else{
-              define('NFDEBUG', $nfdebug.= STAG ."protection is disabled\t[STOP]". ETAG . '::' . $this->helper->nf_benchmarks(NF_STARTTIME) ); 
+			   if ( (!defined('NFDEBUG')) && ($nfdebug) )
+                   define('NFDEBUG', $nfdebug.= STAG ."protection is disabled\t[STOP]". ETAG . '::' . $this->helper->nf_benchmarks(NF_STARTTIME) ); 
 		 }
 	}	
 	
