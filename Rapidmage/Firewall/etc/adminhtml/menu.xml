@@ -9,6 +9,7 @@
         <add id="Rapidmage_Firewall::manage_rules" title="Rules" module="Rapidmage_Firewall" sortOrder="4" parent="Rapidmage_Firewall::main_menu" action="firewall/rules/index" resource="Rapidmage_Firewall::manage_rules" />
         <add id="Rapidmage_Firewall::manage_recentmodified" title="Recently Modified Files" module="Rapidmage_Firewall" sortOrder="5" parent="Rapidmage_Firewall::main_menu" action="firewall/dashboard/recent" resource="Rapidmage_Firewall::manage_recentmodified" />
         <add id="Rapidmage_Firewall::scan_store" title="Scan your store" module="Rapidmage_Firewall" sortOrder="6" parent="Rapidmage_Firewall::main_menu" action="firewall/dashboard/scan" resource="Rapidmage_Firewall::scan_store" />
-        <add id="Rapidmage_Firewall::configuration" title="Configurations" module="Rapidmage_Firewall" sortOrder="7" parent="Rapidmage_Firewall::main_menu" action="adminhtml/system_config/edit/section/firewall" resource="Rapidmage_Firewall::configuration" />
+        <add id="Rapidmage_Firewall::site_speed" title="Test Your Page Speed" module="Rapidmage_Firewall" sortOrder="7" parent="Rapidmage_Firewall::main_menu" action="firewall/dashboard/speed" resource="Rapidmage_Firewall::site_speed" />
+        <add id="Rapidmage_Firewall::configuration" title="Configurations" module="Rapidmage_Firewall" sortOrder="8" parent="Rapidmage_Firewall::main_menu" action="adminhtml/system_config/edit/section/firewall" resource="Rapidmage_Firewall::configuration" />
     </menu>
 </config>
